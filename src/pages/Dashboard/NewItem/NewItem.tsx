@@ -367,13 +367,13 @@ const NewItem: React.FC<NewItemProps> = ({
                                     </Space>
                                 </Dropdown>
                             </div>
-                            <div className={styles.productInfoItem}>
+                            {/* <div className={styles.productInfoItem}>
                                 <p>Product Details &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &</p>
                                 <textarea className={styles.inputValue} rows={5} style={{ resize: 'none' }}
                                     value={productAttributes.product_context} onChange={(e) => {
                                         handleProductAttributesChange('product_context', e.target.value)
                                     }} />
-                            </div>
+                            </div> */}
 
                         </div>
 
