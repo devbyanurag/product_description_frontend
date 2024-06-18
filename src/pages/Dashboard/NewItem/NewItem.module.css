@@ -1,0 +1,247 @@
+.maskContainer {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #0000008b;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  color: #404040;
+}
+.modelContainer {
+  background-color: white;
+  top: 40px;
+  position: relative;
+  padding: 20px;
+  height: 90vh;
+  width: 900px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+#mandatory {
+  color: red;
+}
+.modelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+.modelHeader button {
+  border: none;
+  background: transparent;
+  padding: 5px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.horizontailContainer {
+  width: 100%;
+  display: flex;
+  padding: 0px 30px;
+}
+.horizontailContainer div {
+  height: 1px;
+  width: 100%;
+  margin: 10px 0;
+  background-color: #b2b2b2;
+}
+
+.infoContainer {
+  display: flex;
+  padding: 10px 30px;
+  /* background-color: #01aea9; */
+}
+.leftContainer {
+  flex: 1;
+}
+.leftContainer .headerContainer {
+  padding: 5px 0;
+  border-bottom: 2px solid #7b7b7b;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+.leftContainer .headerContainer p {
+  font-size: 12px;
+}
+.productInfoItem {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+.productInfoItem p {
+  width: 43%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.productInfoItem .inputValue {
+  padding: 5px;
+  border: 1px solid #b2b2b2;
+  width: 55%;
+  font-family: "Urbanist", sans-serif;
+  font-size: 16px;
+}
+
+.rightContainer {
+  width: 350px;
+  padding: 10px;
+}
+.rightContainer .imageHeadingContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rightContainer .imageHeadingContainer button {
+  padding: 5px 10px;
+  border: 1px solid #01aea9;
+  background-color: transparent;
+  font-size: 12px;
+}
+.rightContainer .imageHeadingContainer button:hover {
+  background-color: #01aea9;
+  color: white;
+}
+.rightContainer .infoContainerHeading {
+  margin: 10px 0;
+  color: black;
+  
+ 
+}
+ .infoContainerHeadingIcon{
+    display: flex;
+}
+.infoHeadingIcon{
+    margin: 0 10px;
+}
+.imageInfoText {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.modelContainer .imgContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.uploaderWrapper {
+  position: relative;
+  height: 270px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.uploaderWrapper label {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed black;
+}
+.uploaderWrapper .delete {
+  position: absolute;
+  right: 0%;
+}
+.pointer:hover {
+  cursor: pointer;
+}
+.uploaderWrapperLeft {
+  left: 0%;
+  top: 50%;
+  position: absolute;
+}
+
+.uploaderWrapperRight {
+  right: 0%;
+  top: 50%;
+  position: absolute;
+}
+.generateWrapper {
+  padding: 10px 30px;
+}
+.tabWrapper {
+  display: flex;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.tabContainer {
+  border: 1px solid #01aea9;
+  margin-right: 10px;
+  padding: 5px;
+  
+}
+.tabContainer {
+  background-color: #01aea9;
+  color: white;
+}
+.modelContainer .imgContainer img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.genContainer {
+  width: 100%;
+  min-height: 200px;
+  background-color: #f5f8f7;
+}
+.genOptionsWrapper {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+}
+.italic {
+  font-style: italic;
+}
+
+.genOptionsContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.genOptionsContainer p {
+  margin: 0 5px;
+  font-size: 12px;
+}
+.genContainer .genPara {
+  padding: 10px;
+}
+.genAnimationCon {
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.genAnimationCon p {
+  padding: 0 20px;
+  text-align: center;
+}
+.genAnimationCon p span {
+  color: #01aea9;
+}
+
+.loading {
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+.loadingAnimation {
+  animation: mymoveRotate 2s infinite;
+}
+@keyframes mymoveRotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
