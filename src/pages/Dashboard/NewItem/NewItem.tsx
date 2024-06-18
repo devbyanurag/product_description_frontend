@@ -289,12 +289,12 @@ const NewItem: React.FC<NewItemProps> = ({
         success('Saved Successfully')
     };
 
-    const handleDeleteGen = (indexToDelete: number) => {
-        if (generatedData.length > 1) {
-            const updatedData = generatedData.filter((_, index) => index !== indexToDelete);
-            setGeneratedData(updatedData);
-        }
-    };
+    // const handleDeleteGen = (indexToDelete: number) => {
+    //     if (generatedData.length > 1) {
+    //         const updatedData = generatedData.filter((_, index) => index !== indexToDelete);
+    //         setGeneratedData(updatedData);
+    //     }
+    // };
 
 
     return (
