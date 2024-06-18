@@ -488,13 +488,13 @@ const NewItem: React.FC<NewItemProps> = ({
                                                         <p>Translate</p>
 
                                                     </div>
-                                                    {
+                                                    {/* {
                                                         generatedData.length > 1 && <div className={`${styles.genOptionsContainer} ${styles.pointer}`} onClick={() => { handleDeleteGen(index) }}>
                                                             <MdDelete color='#23666c' />
                                                             <p>Delete</p>
 
                                                         </div>
-                                                    }
+                                                    } */}
                                                     <Modal title="Translate" open={isModalOpen} onOk={() => {
                                                         handleAddData(data.description, data.title)
                                                         setIsModalOpen(false)
@@ -569,13 +569,13 @@ const NewItem: React.FC<NewItemProps> = ({
                                                         <p>Translate</p>
 
                                                     </div>
-                                                    {
+                                                    {/* {
                                                         generatedData.length > 1 && <div className={`${styles.genOptionsContainer} ${styles.pointer}`} onClick={() => { handleDeleteGen(index) }}>
                                                             <MdDelete color='#23666c' />
                                                             <p>Delete</p>
 
                                                         </div>
-                                                    }
+                                                    } */}
                                                     <Modal title="Translate" open={isModalOpen} onOk={() => {
                                                         handleAddData(data.description, data.title)
                                                         setIsModalOpen(false)
