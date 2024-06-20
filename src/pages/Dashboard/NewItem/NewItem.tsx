@@ -35,9 +35,14 @@ const NewItem: React.FC<NewItemProps> = ({
             language: '',
             loading: false,
             editTitle: false,
-            editDesc: false
+            editDesc: false,
+            title_tag: '',
+            meta_description_tag: '',
+            keywords_tag: '',
+            header_tag: '',
         }
     ];
+
     useEffect(() => {
         if (selectedItem) {
             setProductAttributes({
@@ -57,6 +62,7 @@ const NewItem: React.FC<NewItemProps> = ({
 
     const [generatedData, setGeneratedData] = useState(initialGeneratedData);
 
+
     const [productAttributes, setProductAttributes] = useState({
         productName: '',
         brand: '',
@@ -71,7 +77,12 @@ const NewItem: React.FC<NewItemProps> = ({
             language: newTranslateLanguage,
             loading: false,
             editTitle: false,
-            editDesc: false
+            editDesc: false,
+            title_tag: '',
+            meta_description_tag: '',
+            keywords_tag: '',
+            header_tag: '',
+
         };
 
         const updatedData = [...generatedData];
@@ -228,6 +239,9 @@ const NewItem: React.FC<NewItemProps> = ({
         if (productAttributes.category !== "") {
             formData.append('category', productAttributes.category);
         }
+        if (productAttributes.brand !== "") {
+            formData.append('brand', productAttributes.brand);
+        }
         if (productAttributes.product_context !== "") {
             formData.append('product_context', productAttributes.product_context);
         }
@@ -296,6 +310,58 @@ const NewItem: React.FC<NewItemProps> = ({
     //     }
     // };
 
+    const handleGenerateSeoData = async (indexValue: number) => {
+        if (selectedImages.length <= 0 && productAttributes.product_context === "") {
+            error('Please Enter Product images or Product Details')
+            return;
+        }
+        const formData = new FormData();
+
+        formData.append('description', generatedData[indexValue].description);
+        formData.append('language', generatedData[indexValue].language);
+
+        try {
+            setGeneratedData(prevData => {
+                const updatedData = [...prevData];
+                updatedData[indexValue].loading = true;
+                return updatedData;
+            });
+            const response = await apiInstance.post(`/product/product-content-generator/openai/gen-seo`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+            const { seodata, language } = response.data.body;
+            setGeneratedData(prevData => {
+                const updatedData = [...prevData];
+                if (seodata !== "") {
+                    if (seodata.title_tag !== "") {
+                        updatedData[indexValue].title_tag = seodata.title_tag
+                    }
+                    if (seodata.meta_description !== "") {
+                        updatedData[indexValue].meta_description_tag = seodata.meta_description
+                    }
+                    if (seodata.keywords !== "") {
+                        updatedData[indexValue].keywords_tag = seodata.keywords
+                    }
+                }
+                if (language !== "") {
+                    updatedData[indexValue].language = language;
+                }
+                return updatedData;
+            });
+
+        } catch (e) {
+            error("somthing went wrong. Try again")
+        }
+        finally {
+            setGeneratedData(prevData => {
+                const updatedData = [...prevData];
+                updatedData[indexValue].loading = false;
+                return updatedData;
+            });
+        }
+    }
 
     return (
         <div className={styles.maskContainer} onClick={() => setIsModalOpenNew(false)}>
@@ -525,7 +591,7 @@ const NewItem: React.FC<NewItemProps> = ({
                                             {
                                                 data.description === '' ? !data.loading ? <div className={styles.genAnimationCon}>
                                                     <RiAiGenerate color='#23666c' size={30} onClick={() => { handleGenerate('desc') }} />
-                                                    <p onClick={() => { handleGenerate('desc') }}><span>Generate text</span> based in the item attributes</p>
+                                                    <p onClick={() => { handleGenerate('desc') }}><span>Generate text</span> based on the item attributes</p>
                                                 </div> : <div className={styles.loading}>
                                                     <p>Generating...</p>
                                                     <RiLoader4Line className={styles.loadingAnimation} />
@@ -606,7 +672,7 @@ const NewItem: React.FC<NewItemProps> = ({
                                             {
                                                 data.title === '' ? !data.loading ? <div className={styles.genAnimationCon}>
                                                     <RiAiGenerate color='#23666c' size={30} onClick={() => { handleGenerate('title') }} />
-                                                    <p onClick={() => { handleGenerate('title') }}><span>Generate text</span> based in the item attributes</p>
+                                                    <p onClick={() => { handleGenerate('title') }}><span>Generate text</span> based on the item attributes</p>
                                                 </div> : <div className={styles.loading}>
                                                     <p>Generating...</p>
                                                     <RiLoader4Line className={styles.loadingAnimation} />
@@ -614,7 +680,80 @@ const NewItem: React.FC<NewItemProps> = ({
                                                 </p>
                                             }
                                         </div>
-                                    }
+                                    },
+                                    {
+                                        key: '3',
+                                        label: 'SEO',
+                                        children: <div className={styles.genContainer}>
+                                            <div className={styles.genOptionsWrapper}>
+                                                <div className={styles.genOptionsWrapper}>
+                                                    <div className={`${styles.genOptionsContainer} ${styles.pointer}`}
+                                                        onClick={() => { handleGenerateSeoData(index) }}>
+                                                        <RiAiGenerate color='#23666c' />
+                                                        <p>Generate</p>
+                                                    </div>
+                                                    <div className={`${styles.genOptionsContainer} ${styles.pointer}`}
+                                                        onClick={() => {
+                                                            setGeneratedData(prevData => {
+                                                                const updatedData = [...prevData];
+                                                                updatedData[index].editTitle = true;
+                                                                return updatedData;
+                                                            });
+                                                        }}>
+                                                        <RiEditLine color='#23666c' />
+                                                        <p>Edit</p>
+                                                    </div>
+                                                    <div className={`${styles.genOptionsContainer} ${styles.pointer}`} onClick={() => { setIsModalOpen(true) }}>
+                                                        <MdGTranslate color='#23666c' />
+                                                        <p>Translate</p>
+
+                                                    </div>
+
+                                                    <Modal title="Translate" open={isModalOpen} onOk={() => {
+                                                        handleAddData(data.description, data.title)
+                                                        setIsModalOpen(false)
+                                                    }} onCancel={() => { setIsModalOpen(false) }}>
+                                                        <div className={styles.productInfoItem}>
+                                                            <p>Language &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot;</p>
+                                                            <Dropdown
+                                                                menu={{ items: languageOptions, onClick: handleTranslateLanguageChange }}
+                                                                className={styles.inputValue}
+                                                                overlayStyle={{ borderRadius: 0 }}
+                                                                trigger={['click']}
+                                                            >
+                                                                <Space style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                                                                    {newTranslateLanguage}
+                                                                    <FaChevronDown />
+                                                                </Space>
+                                                            </Dropdown>
+                                                        </div>
+
+                                                    </Modal>
+                                                </div>
+                                                <div className={`${styles.genOptionsContainer} ${styles.pointer}`}>
+                                                    <p className={styles.italic}>{data.language}</p>
+                                                </div>
+                                            </div>
+                                            <hr style={{ borderColor: '#f5f8f786' }} />
+
+                                            {
+                                                data.title_tag === '' ? !data.loading ? <div className={styles.genAnimationCon}>
+                                                    <RiAiGenerate color='#23666c' size={30} onClick={() => { handleGenerateSeoData(index) }} />
+                                                    <p><span>Generate SEO Values</span> based on the generated description </p>
+                                                </div> : <div className={styles.loading}>
+                                                    <p>Generating...</p>
+                                                    <RiLoader4Line className={styles.loadingAnimation} />
+                                                </div> : <p contentEditable={data.editTitle} className={styles.genPara}>
+                                                    <b> Title tag</b>: {data.title_tag}.
+                                                    <br />
+                                                    <b>Meta description</b>: {data.meta_description_tag}.
+                                                    <br />
+                                                    <b>Keywords</b>: {data.keywords_tag}.
+                                                </p>
+                                            }
+                                        </div>
+                                    },
+
                                 ]} style={{ marginBottom: 20 }} />
                             )
                         })

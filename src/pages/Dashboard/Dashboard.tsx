@@ -12,8 +12,12 @@ interface GeneratedDataItem {
     description: string;
     language: string;
     loading: boolean;
-    editTitle:boolean;
-    editDesc:boolean
+    editTitle: boolean;
+    editDesc: boolean;
+    title_tag: string;
+    meta_description_tag: string;
+    keywords_tag: string;
+    header_tag: string;
 }
 interface Base64Image {
     name: string;

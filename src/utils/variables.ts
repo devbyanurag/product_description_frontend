@@ -83,3 +83,18 @@ export const deleteEdit: MenuItem[] = [
         key: '2',
     },
 ];
+
+export const sortValues: MenuItem[] = [
+    {
+        label: 'Alphabetic',
+        key: '1',
+    },
+    {
+        label: 'Older to New',
+        key: '2',
+    },
+    {
+        label: 'New to Older',
+        key: '3',
+    },
+];

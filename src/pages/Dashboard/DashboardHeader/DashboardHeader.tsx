@@ -5,6 +5,8 @@ import { GoPlus } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
 import { PiSelectionPlus } from "react-icons/pi";
 import { FaSort } from "react-icons/fa";
+import { Dropdown, MenuProps } from 'antd';
+import { sortValues } from '../../../utils/variables';
 
 interface DashboardHeaderInterface {
     setSelectionDisabled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,7 +15,7 @@ interface DashboardHeaderInterface {
 }
 const DashboardHeader = ({ selectionDisabled, setSelectionDisabled, showModalNew }: DashboardHeaderInterface) => {
     const [sortDisplay, setSortDisplay] = useState(false);
-    const [selectedSort, setSelectedSort] = useState('Alphabetic');
+    const [selectedSort, setSelectedSort] = useState(1);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,6 +35,11 @@ const DashboardHeader = ({ selectionDisabled, setSelectionDisabled, showModalNew
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [sortDisplay]);
+
+    const handleTranslateLanguageChange: MenuProps['onClick'] = (e) => {
+        setSelectedSort(parseInt(e.key))
+
+    };
 
     return (
         <div className={styles.headerContainer}>
@@ -76,59 +83,25 @@ const DashboardHeader = ({ selectionDisabled, setSelectionDisabled, showModalNew
                 <MdDelete size={20} className={styles.iconMargin} />
                 <p>Delete</p>
             </div>
-            <div
-                className={styles.headerItemContainer}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        setSortDisplay(!sortDisplay);
-                    }
-                }}
-                onClick={(e) => {
-                    e.preventDefault();
-                    setSortDisplay(!sortDisplay);
-                }}
+            <Dropdown
+                menu={{ items: sortValues, onClick: handleTranslateLanguageChange }}
+                overlayStyle={{ borderRadius: 0 }}
+                trigger={['click']}
             >
-                <FaSort size={20} className={styles.iconMargin} />
-                <p>Sort</p>
-                {sortDisplay && (
-                    <div className={styles.dropdown} ref={dropdownRef}>
-                        <div className={styles.dropdowntop}></div>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setSelectedSort('Alphabetic');
-                                setSortDisplay(false);
-                            }}
-                            className={`${selectedSort === 'Alphabetic' && styles.buttonSelected}`}
-                        >
-                            Alphabetic
-                        </button>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setSelectedSort('OtoN');
-                                setSortDisplay(false);
-                            }}
-                            className={`${selectedSort === 'OtoN' && styles.buttonSelected}`}
-                        >
-                            Older to New
-                        </button>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setSelectedSort('NtoO');
-                                setSortDisplay(false);
-                            }}
-                            className={`${selectedSort === 'NtoO' && styles.buttonSelected}`}
-                        >
-                            New to Older
-                        </button>
-                    </div>
-                )}
-            </div>
+                <div
+                    className={styles.headerItemContainer}
+                    role="button"
+                    tabIndex={0}
+
+                >
+
+                    <FaSort size={20} className={styles.iconMargin} />
+                    <p>Sort</p>
+
+
+                </div>
+            </Dropdown>
+
         </div>
     );
 };
