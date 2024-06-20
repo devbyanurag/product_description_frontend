@@ -24,6 +24,7 @@ const DashboardHeader = ({ selectionDisabled, setSelectionDisabled, showModalNew
         }
     };
 
+
     useEffect(() => {
         if (sortDisplay) {
             document.addEventListener('mousedown', handleClickOutside);
@@ -31,6 +32,7 @@ const DashboardHeader = ({ selectionDisabled, setSelectionDisabled, showModalNew
             document.removeEventListener('mousedown', handleClickOutside);
         }
 
+        console.log(selectedSort)
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
